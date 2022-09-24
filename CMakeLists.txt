@@ -32,22 +32,6 @@ include(GNUInstallDirs)
 set(INSTALL_INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR}/Coin)
 set(INSTALL_CMAKE_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
-if(MSVC)
-  set(
-    CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} /bigobj /MP /wd4996 /wd4819 /wd4251 /wd4267 /wd4244 /wd4275"
-    )
-endif()
-
-if(APPLE)
-  set(
-    CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Wno-inconsistent-missing-override -Wno-unused-command-line-argument -Wno-unused-result -Wno-exceptions"
-    )
-  set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9"
-      CACHE STRING "Minimum OS X deployment version")
-endif()
-
 find_package(CoinUtils REQUIRED)
 find_package(Osi REQUIRED)
 
@@ -195,15 +179,28 @@ set(CLP_HEADERS
 
 add_library(${PROJECT_NAME} ${CLP_SOURCES})
 
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /bigobj /MP /wd4996 /wd4819 /wd4251 /wd4267 /wd4244 /wd4275)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
+
+if(APPLE)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        -Wno-inconsistent-missing-override
+        -Wno-unused-command-line-argument
+        -Wno-unused-result
+        -Wno-exceptions
+    )
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9"
+        CACHE STRING "Minimum OS X deployment version")
+endif()
+
 target_include_directories(${PROJECT_NAME}
                            PUBLIC
                            $<INSTALL_INTERFACE:${INSTALL_INCLUDE_DIR}>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/OsiClp>)
 
-if(MSVC)
-  target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
-endif()
 target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CMATH)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Coin::CoinUtils Coin::Osi)
