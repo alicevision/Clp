@@ -99,7 +99,6 @@ if(MSVC)
   target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif()
 target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CMATH)
-target_compile_definitions(${PROJECT_NAME} PUBLIC COIN_HAS_CLP)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Coin::CoinUtils Coin::Osi)
 
