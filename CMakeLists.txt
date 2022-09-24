@@ -51,26 +51,147 @@ endif()
 find_package(CoinUtils REQUIRED)
 find_package(Osi REQUIRED)
 
-file(GLOB CLP_SOURCES
-          src/*.hpp
-          src/*.cpp
-          src/OsiClp/*.hpp
-          src/OsiClp/*.cpp)
-file(GLOB CLP_REMOVE
-          src/ClpCholeskyMumps.cpp
-          src/ClpCholeskyUfl.cpp
-          src/ClpCholeskyWssmp.cpp
-          src/ClpCholeskyWssmpKKT.cpp
-          src/ClpMain.cpp
-          src/*Abc*.cpp
-          src/ClpCholeskyMumps.hpp
-          src/ClpCholeskyUfl.hpp
-          src/ClpCholeskyWssmp.hpp
-          src/ClpCholeskyWssmpKKT.hpp
-          src/ClpMain.hpp
-          src/*Abc*.hpp
-          src/*Abc*.h)
-list(REMOVE_ITEM CLP_SOURCES ${CLP_REMOVE})
+set(CLP_SOURCES
+    src/CbcOrClpParam.cpp
+    src/ClpCholeskyBase.cpp
+    src/ClpCholeskyDense.cpp
+    src/ClpCholeskyPardiso.cpp
+    src/ClpCholeskyTaucs.cpp
+    src/Clp_C_Interface.cpp
+    src/ClpConstraint.cpp
+    src/ClpConstraintLinear.cpp
+    src/ClpConstraintQuadratic.cpp
+    src/ClpDualRowDantzig.cpp
+    src/ClpDualRowPivot.cpp
+    src/ClpDualRowSteepest.cpp
+    src/ClpDummyMatrix.cpp
+    src/ClpDynamicExampleMatrix.cpp
+    src/ClpDynamicMatrix.cpp
+    src/ClpEventHandler.cpp
+    src/ClpFactorization.cpp
+    src/ClpGubDynamicMatrix.cpp
+    src/ClpGubMatrix.cpp
+    src/ClpHelperFunctions.cpp
+    src/ClpInterior.cpp
+    src/ClpLinearObjective.cpp
+    src/ClpLsqr.cpp
+    src/ClpMatrixBase.cpp
+    src/ClpMessage.cpp
+    src/ClpModel.cpp
+    src/ClpNetworkBasis.cpp
+    src/ClpNetworkMatrix.cpp
+    src/ClpNode.cpp
+    src/ClpNonLinearCost.cpp
+    src/ClpObjective.cpp
+    src/ClpPackedMatrix.cpp
+    src/ClpParam.cpp
+    src/ClpParameters.cpp
+    src/ClpParamUtils.cpp
+    src/ClpPdcoBase.cpp
+    src/ClpPdco.cpp
+    src/ClpPEDualRowDantzig.cpp
+    src/ClpPEDualRowSteepest.cpp
+    src/ClpPEPrimalColumnDantzig.cpp
+    src/ClpPEPrimalColumnSteepest.cpp
+    src/ClpPESimplex.cpp
+    src/ClpPlusMinusOneMatrix.cpp
+    src/ClpPredictorCorrector.cpp
+    src/ClpPresolve.cpp
+    src/ClpPrimalColumnDantzig.cpp
+    src/ClpPrimalColumnPivot.cpp
+    src/ClpPrimalColumnSteepest.cpp
+    src/ClpQuadraticObjective.cpp
+    src/ClpSimplex.cpp
+    src/ClpSimplexDual.cpp
+    src/ClpSimplexNonlinear.cpp
+    src/ClpSimplexOther.cpp
+    src/ClpSimplexPrimal.cpp
+    src/ClpSolve.cpp
+    src/ClpSolver.cpp
+    src/Idiot.cpp
+    src/IdiSolve.cpp
+    src/MyEventHandler.cpp
+    src/MyMessageHandler.cpp
+    src/OsiClp/OsiClpSolverInterface.cpp
+    src/unitTest.cpp
+)
+
+# the following files are not included
+#
+# src/ClpCholeskyMumps.cpp
+# src/ClpCholeskyUfl.cpp
+# src/ClpCholeskyWssmp.cpp
+# src/ClpCholeskyWssmpKKT.cpp
+# src/ClpMain.cpp
+# src/*Abc*.cpp
+
+set(CLP_HEADERS
+    src/CbcOrClpParam.hpp
+    src/ClpCholeskyBase.hpp
+    src/ClpCholeskyDense.hpp
+    src/ClpCholeskyPardiso.hpp
+    src/ClpCholeskyTaucs.hpp
+    src/Clp_C_Interface.h
+    src/ClpConfig.h
+    src/ClpConstraint.hpp
+    src/ClpConstraintLinear.hpp
+    src/ClpConstraintQuadratic.hpp
+    src/ClpDualRowDantzig.hpp
+    src/ClpDualRowPivot.hpp
+    src/ClpDualRowSteepest.hpp
+    src/ClpDummyMatrix.hpp
+    src/ClpDynamicExampleMatrix.hpp
+    src/ClpDynamicMatrix.hpp
+    src/ClpEventHandler.hpp
+    src/ClpFactorization.hpp
+    src/ClpGubDynamicMatrix.hpp
+    src/ClpGubMatrix.hpp
+    src/ClpHelperFunctions.hpp
+    src/ClpInterior.hpp
+    src/ClpLinearObjective.hpp
+    src/ClpLsqr.hpp
+    src/ClpMatrixBase.hpp
+    src/ClpMessage.hpp
+    src/ClpModel.hpp
+    src/ClpModelParameters.hpp
+    src/ClpNetworkBasis.hpp
+    src/ClpNetworkMatrix.hpp
+    src/ClpNode.hpp
+    src/ClpNonLinearCost.hpp
+    src/ClpObjective.hpp
+    src/ClpPackedMatrix.hpp
+    src/ClpParameters.hpp
+    src/ClpParam.hpp
+    src/ClpParamUtils.hpp
+    src/ClpPdcoBase.hpp
+    src/ClpPdco.hpp
+    src/ClpPEDualRowDantzig.hpp
+    src/ClpPEDualRowSteepest.hpp
+    src/ClpPEPrimalColumnDantzig.hpp
+    src/ClpPEPrimalColumnSteepest.hpp
+    src/ClpPESimplex.hpp
+    src/ClpPlusMinusOneMatrix.hpp
+    src/ClpPredictorCorrector.hpp
+    src/ClpPresolve.hpp
+    src/ClpPrimalColumnDantzig.hpp
+    src/ClpPrimalColumnPivot.hpp
+    src/ClpPrimalColumnSteepest.hpp
+    src/ClpPrimalQuadraticDantzig.hpp
+    src/ClpQuadraticObjective.hpp
+    src/ClpSimplexDual.hpp
+    src/ClpSimplex.hpp
+    src/ClpSimplexNonlinear.hpp
+    src/ClpSimplexOther.hpp
+    src/ClpSimplexPrimal.hpp
+    src/ClpSolve.hpp
+    src/ClpSolver.hpp
+    src/config_clp_default.h
+    src/Idiot.hpp
+    src/MyEventHandler.hpp
+    src/MyMessageHandler.hpp
+    src/OsiClp/OsiClpConfig.h
+    src/OsiClp/OsiClpSolverInterface.hpp
+)
 
 add_library(${PROJECT_NAME} ${CLP_SOURCES})
 
@@ -87,19 +208,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CMATH)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Coin::CoinUtils Coin::Osi)
 
-install(DIRECTORY src/
-        DESTINATION ${INSTALL_INCLUDE_DIR}
-        FILES_MATCHING
-        PATTERN "*.h"
-        PATTERN "*.hpp"
-        PATTERN "config_default.h" EXCLUDE)
-
-install(DIRECTORY src/OsiClp/
-        DESTINATION ${INSTALL_INCLUDE_DIR}
-        FILES_MATCHING
-        PATTERN "*.h"
-        PATTERN "*.hpp"
-        PATTERN "config_default.h" EXCLUDE)
+install(FILES ${CLP_HEADERS} DESTINATION ${INSTALL_INCLUDE_DIR})
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT "${PROJECT_NAME}Targets"
