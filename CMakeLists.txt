@@ -67,24 +67,24 @@ find_package(CoinUtils REQUIRED)
 find_package(Osi REQUIRED)
 
 file(GLOB CLP_SOURCES
-          Clp/src/*.hpp
-          Clp/src/*.cpp
-          Clp/src/OsiClp/*.hpp
-          Clp/src/OsiClp/*.cpp)
+          src/*.hpp
+          src/*.cpp
+          src/OsiClp/*.hpp
+          src/OsiClp/*.cpp)
 file(GLOB CLP_REMOVE
-          Clp/src/ClpCholeskyMumps.cpp
-          Clp/src/ClpCholeskyUfl.cpp
-          Clp/src/ClpCholeskyWssmp.cpp
-          Clp/src/ClpCholeskyWssmpKKT.cpp
-          Clp/src/ClpMain.cpp
-          Clp/src/*Abc*.cpp
-          Clp/src/ClpCholeskyMumps.hpp
-          Clp/src/ClpCholeskyUfl.hpp
-          Clp/src/ClpCholeskyWssmp.hpp
-          Clp/src/ClpCholeskyWssmpKKT.hpp
-          Clp/src/ClpMain.hpp
-          Clp/src/*Abc*.hpp
-          Clp/src/*Abc*.h)
+          src/ClpCholeskyMumps.cpp
+          src/ClpCholeskyUfl.cpp
+          src/ClpCholeskyWssmp.cpp
+          src/ClpCholeskyWssmpKKT.cpp
+          src/ClpMain.cpp
+          src/*Abc*.cpp
+          src/ClpCholeskyMumps.hpp
+          src/ClpCholeskyUfl.hpp
+          src/ClpCholeskyWssmp.hpp
+          src/ClpCholeskyWssmpKKT.hpp
+          src/ClpMain.hpp
+          src/*Abc*.hpp
+          src/*Abc*.h)
 list(REMOVE_ITEM CLP_SOURCES ${CLP_REMOVE})
 
 add_library(${PROJECT_NAME} ${CLP_SOURCES})
@@ -92,8 +92,8 @@ add_library(${PROJECT_NAME} ${CLP_SOURCES})
 target_include_directories(${PROJECT_NAME}
                            PUBLIC
                            $<INSTALL_INTERFACE:${RELATIVE_INSTALL_INCLUDE_DIR}>
-                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Clp/src/>
-                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Clp/src/OsiClp>)
+                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/>
+                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/OsiClp>)
 
 if(MSVC)
   target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
@@ -103,14 +103,14 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC COIN_HAS_CLP)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Coin::CoinUtils Coin::Osi)
 
-install(DIRECTORY Clp/src/
+install(DIRECTORY src/
         DESTINATION ${INSTALL_INCLUDE_DIR}
         FILES_MATCHING
         PATTERN "*.h"
         PATTERN "*.hpp"
         PATTERN "config_default.h" EXCLUDE)
 
-install(DIRECTORY Clp/src/OsiClp/
+install(DIRECTORY src/OsiClp/
         DESTINATION ${INSTALL_INCLUDE_DIR}
         FILES_MATCHING
         PATTERN "*.h"
